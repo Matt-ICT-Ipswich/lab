@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://webapi-spydus.civica.com.au/client.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Spydus10 API Development Client</title>
+    <style>
+        .heading {
+            color: Black;
+            font-family: Calibri;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .heading1 {
+            color: black;
+            font-family: Calibri;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .mand {
+            color: red;
+        }
+
+        .inputText {
+            margin-bottom: 2px;
+            width: 350px;
+        }
+
+        .inputText2 {
+            margin-bottom: 2px;
+            width: 295px;
+        }
+
+        .inputButton {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            Height: 35px;
+            width: 802px;
+        }
+
+        .inputButton2 {
+            Height: 25px;
+            width: 50px;
+        }
+
+        .panelStyle {
+            padding: 10px;
+            display: none;
+            border: hidden;
+        }
+
+        .panelStyleDefault {
+            padding: 10px;
+            border: hidden;
+        }
+
+        .panelMenuItems {
+            padding: 0px;
+            display: none;
+            border: hidden;
+        }
+
+        .panelMenuItemsDefault {
+            padding: 0px;
+            border: hidden;
+        }
+
+        .outputDiv {
+            height: 150px;
+            width: 800px;
+            word-wrap: break-word;
+            overflow-y: scroll;
+            border: solid;
+            border-width: 1px;
+            font-family: Calibri;
+        }
+
+        .menuButton {
+            margin-top: 3px;
+            margin-bottom: 3px;
+            margin-left: 5px;
+            margin-right: 5px;
+            Height: 30px;
+            width: 190px;
+        }
+
+        .menuMainButton {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+            Height: 30px;
+            width: 190px;
+            font-size: 20px;
+        }
+
+        .banner {
+            width: 100%;
+            height: 45px;
+            background-color: lightgray;
+            background: linear-gradient(lightgray,whitesmoke);
+        }
+
+        .title {
+            margin-left: 5px;
+            color: black;
+            font-family: Calibri;
+            font-size: 28px;
+        }
+
+        .help {
+            padding-right: 5px;
+            font-family: Calibri;
+            font-size: 22px;
+            color: #0066CC;
+        }
+    </style>
+</head>
+<body onload="initialize();">
+
+    <script src="./Spydus10 API Development Client_files/jquery-2.0.3.min.js"></script>
+    <script src="./Spydus10 API Development Client_files/jquery.base64.js"></script>
+    <script src="./Spydus10 API Development Client_files/Client.js"></script>
+
+    <div>
+        <table border="1" style="width:800px">
+            <tbody><tr>
+                <td colspan="2">
+                    <table class="banner">
+                        <tbody><tr>
+                            <td align="left">
+                                <label class="title">SPYDUS10 API DEVELOPMENT CLIENT</label>
+                            </td>
+                            <td align="right">
+                                <a class="help" href="http://webapi-spydus.civica.com.au/Documents/Spydus10%20API.pdf" target="_blank">API Documentation</a>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div style="background-color:white">
+                        <input type="button" id="authentication" value="Authentication" class="menuMainButton" onclick="menuMainItemClick(&#39;authentication&#39;);">
+                        <input type="button" id="search" value="Search" class="menuMainButton" onclick="menuMainItemClick(&#39;search&#39;);">
+                        <input type="button" id="information" value="Information" class="menuMainButton" onclick="menuMainItemClick(&#39;information&#39;);">
+                        <input type="button" id="circulation" value="Circulation" class="menuMainButton" onclick="menuMainItemClick(&#39;circulation&#39;);">
+                        <input type="button" id="maintenance" value="Maintenance" class="menuMainButton" onclick="menuMainItemClick(&#39;maintenance&#39;);">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" style="background-color:white">
+                    <div id="authenticationMenu" class="panelMenuItemsDefault" style="display: block;">
+                        <input type="button" id="menuItemAuthVendor" value="Authenticate Vendor" class="menuButton" onclick="menuItemClick(&#39;authVendor&#39;);"><br>
+                        <input type="button" id="menuItemAuthPatron" value="Authenticate Patron" class="menuButton" onclick="menuItemClick(&#39;authPatron&#39;);"><br>
+                        <input type="button" id="menuItemValBearer" value="Validate Bearer Token" class="menuButton" onclick="menuItemClick(&#39;valBearer&#39;);"><br>
+                        <input type="button" id="menuItemValBearer" value="OPAC Login" class="menuButton" onclick="menuItemClick(&#39;opacLogin&#39;);"><br>
+                    </div>
+                    <div id="circulationMenu" class="panelMenuItems" style="display: none;">
+                        <input type="button" id="menuItemCheckOut" value="Issue" class="menuButton" onclick="menuItemClick(&#39;checkOut&#39;);"><br>
+                        <input type="button" id="menuItemCheckIn" value="Return" class="menuButton" onclick="menuItemClick(&#39;checkIn&#39;);"><br>
+                        <input type="button" id="menuItemRenewal" value="Renewal" class="menuButton" onclick="menuItemClick(&#39;renewal&#39;);"><br>
+                        <input type="button" id="menuItemAddHold" value="Place Reservation" class="menuButton" onclick="menuItemClick(&#39;addHold&#39;);"><br>
+                        <input type="button" id="menuItemUpdateHold" value="Edit Reservation" class="menuButton" onclick="menuItemClick(&#39;updateHold&#39;);"><br>
+                        <input type="button" id="menuItemRemoveHold" value="Cancel Reservation" class="menuButton" onclick="menuItemClick(&#39;removeHold&#39;);"><br>
+                        <input type="button" id="menuItemPayment" value="Patron Payment" class="menuButton" onclick="menuItemClick(&#39;payment&#39;);"><br>
+                        <input type="button" id="menuItemAddCharge" value="Add Charge" class="menuButton" onclick="menuItemClick(&#39;addCharge&#39;);"><br>
+                        <input type="button" id="menuItemCancelCharge" value="Cancel Charge" class="menuButton" onclick="menuItemClick(&#39;cancelCharge&#39;);"><br>
+                    </div>
+                    <div id="maintenanceMenu" class="panelMenuItems" style="display: none;">
+                        <input type="button" id="menuItemCreatePatron" value="Create Patron" class="menuButton" onclick="menuItemClick(&#39;createPatron&#39;);"><br>
+                        <input type="button" id="menuItemUpdatePatron" value="Update Patron" class="menuButton" onclick="menuItemClick(&#39;updatePatron&#39;);"><br>
+                        <input type="button" id="menuItemCreateContact" value="Create Contact" class="menuButton" onclick="menuItemClick(&#39;createContact&#39;);"><br>
+                        <input type="button" id="menuItemUpdateContact" value="Update Contact" class="menuButton" onclick="menuItemClick(&#39;updateContact&#39;);"><br>
+                    </div>
+                    <div id="informationMenu" class="panelMenuItems" style="display: none;">
+                        <input type="button" id="menuItemPatronInfo" value="Patron" class="menuButton" onclick="menuItemClick(&#39;patronInfo&#39;);"><br>
+                        <input type="button" id="menuItemContactInfo" value="Contact" class="menuButton" onclick="menuItemClick(&#39;contactInfo&#39;);"><br>
+                        <input type="button" id="menuItemLoanInfo" value="Loan" class="menuButton" onclick="menuItemClick(&#39;loanInfo&#39;);"><br>
+                        <input type="button" id="menuItemReservationInfo" value="Reservation" class="menuButton" onclick="menuItemClick(&#39;reservationInfo&#39;);"><br>
+                        <input type="button" id="menuItemReservationCount" value="Reservation Count" class="menuButton" onclick="menuItemClick(&#39;reservationCount&#39;);"><br>
+                        <input type="button" id="menuItemChargeInfo" value="Charge" class="menuButton" onclick="menuItemClick(&#39;chargeInfo&#39;);"><br>
+                        <input type="button" id="menuItemPaymentInfo" value="Payment" class="menuButton" onclick="menuItemClick(&#39;paymentInfo&#39;);"><br>
+                        <input type="button" id="menuItemLocationInfo" value="Location" class="menuButton" onclick="menuItemClick(&#39;locationInfo&#39;);"><br>
+                        <input type="button" id="menuItemItemInfo" value="Item" class="menuButton" onclick="menuItemClick(&#39;itemInfo&#39;);"><br>
+                        <input type="button" id="menuItemItemCount" value="Item Count" class="menuButton" onclick="menuItemClick(&#39;itemCount&#39;);"><br>
+                        <input type="button" id="menuItemBibliographicInfo" value="Bibliographic" class="menuButton" onclick="menuItemClick(&#39;bibliographicInfo&#39;);"><br>
+                        <input type="button" id="menuItemLookupInfo" value="Lookup" class="menuButton" onclick="menuItemClick(&#39;lookupInfo&#39;);"><br>
+                    </div>
+                    <div id="searchMenu" class="panelMenuItems" style="display: none;">
+                        <input type="button" id="menuItemPatronSearch" value="Patron" disabled="disabled" class="menuButton" onclick="menuItemClick(&#39;patronSearch&#39;);"><br>
+                        <input type="button" id="menuItemContactSearch" value="Contact" disabled="disabled" class="menuButton" onclick="menuItemClick(&#39;contactSearch&#39;);"><br>
+                        <input type="button" id="menuItemLoanSearch" value="Loan" disabled="disabled" class="menuButton" onclick="menuItemClick(&#39;loanSearch&#39;);"><br>
+                        <input type="button" id="menuItemReservationSearch" value="Reservation" disabled="disabled" class="menuButton" onclick="menuItemClick(&#39;reservationSearch&#39;);"><br>
+                        <input type="button" id="menuItemChargeSearch" value="Charge" disabled="disabled" class="menuButton" onclick="menuItemClick(&#39;chargeSearch&#39;);"><br>
+                        <input type="button" id="menuItemPaymentSearch" value="Payment" disabled="disabled" class="menuButton" onclick="menuItemClick(&#39;paymentSearch&#39;);"><br>
+                        <input type="button" id="menuItemLocationSearch" value="Location" disabled="disabled" class="menuButton" onclick="menuItemClick(&#39;locationSearch&#39;);"><br>
+                        <input type="button" id="menuItemItemSearch" value="Item" disabled="disabled" class="menuButton" onclick="menuItemClick(&#39;itemSearch&#39;);"><br>
+                        <input type="button" id="menuItemBibliographicSearch" value="Bibliographic" class="menuButton" onclick="menuItemClick(&#39;bibliographicSearch&#39;);"><br>
+                    </div>
+                </td>
+
+                <td valign="top">
+                    <div id="authVendor" class="panelStyleDefault" style="display: block;">
+                        <label class="heading">AUTHENTICATE VENDOR</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="authVendorSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="authVendorSerType" value="json">JSON<br>
+                            <label class="heading1">Customer</label><br>
+                            <label>Key</label>
+                            <label class="mand">*</label><br>
+                            <input id="authVendorKey" type="text" value="3B012E1A5B4AA3EA44F235A15D13B831" class="inputText"><br>
+                            <label class="heading1">User Details</label><br>
+                            <label>Username</label>
+                            <label class="mand">*</label><br>
+                            <input id="authVendorUsername" type="text" value="TESTVENDOR" class="inputText" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off"><br>
+                            <label>Password</label>
+                            <label class="mand">*</label><br>
+                            <input id="authVendorPassword" type="password" value="tv" class="inputText" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off"><br>
+                            <label>Institution Id</label>
+                            <label class="mand">*</label><br>
+                            <input id="authVendorInstitutionId" type="text" value="VBAY" class="inputText"><br>
+                            <label>Library Id (location)</label>
+                            <label class="mand">*</label><br>
+                            <input id="authVendorLibarayId" type="text" value="BEA" class="inputText"><br>
+                            <label>Expires (seconds) 0 to disable</label><br>
+                            <input id="authVendorExpires" type="text" value="0" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="authVendorHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="authVendorOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="authenticateVendor();"><br>
+                    </div>
+
+                    <div id="authPatron" class="panelStyleDefault" style="display: none;">
+                        <label class="heading">AUTHENTICATE PATRON</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="authPatronSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="authPatronSerType" value="json">JSON<br>
+                            <label class="heading1">Patron Details</label><br>
+                            <label>Username</label>
+                            <label class="mand">*</label><br>
+                            <input id="authPatronUsername" type="text" value="" class="inputText" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off"><br>
+                            <label>Password</label>
+                            <label class="mand">*</label><br>
+                            <input id="authPatronPassword" type="password" value="" class="inputText" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off"><br>
+                            <label>Expires (seconds) 0 to disable</label><br>
+                            <input id="authPatronExpires" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="authPatronHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="authPatronOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="authenticatePatron();"><br>
+                    </div>
+
+                    <div id="valBearer" class="panelStyle" style="display: none;">
+                        <label class="heading">VALIDATE BEARER TOKEN</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="validateBearerTokenSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="validateBearerTokenSerType" value="json">JSON<br>
+                            <label class="heading1">Token Details</label><br>
+                            <label>Type</label><br>
+                            <input type="radio" name="validateBearerTokenType" value="vendor" checked="checked">Vendor<br>
+                            <input type="radio" name="validateBearerTokenType" value="patron">Patron<br>
+                            <label>Bearer token</label>
+                            <label class="mand">*</label><br>
+                            <input id="validateBearerToken" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="validateBearerHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="validateBearerTokenOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="validateBearerToken();"><br>
+                    </div>
+
+                    <div id="checkIn" class="panelStyle" style="display: none;">
+                        <label class="heading">RETURN</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="checkInSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="checkInSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="checkInValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Check-In Details</label><br>
+                            <label>Identifier Type</label><br>
+                            <input type="radio" name="checkInIdentifierType" value="item" checked="checked">Item identifier (Barcode)
+                            <input type="radio" name="checkInIdentifierType" value="loan">Loan identifier (IRN)<br>
+                            <label>Identifier</label>
+                            <label class="mand">*</label><br>
+                            <input id="checkInIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="checkInHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="checkInOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="checkIn();"><br>
+                    </div>
+
+                    <div id="checkOut" class="panelStyle" style="display: none;">
+                        <label class="heading">ISSUE</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="checkOutSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="checkOutSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="checkOutValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Check-Out Details</label><br>
+                            <input type="checkbox" name="checkOutConfirmation" value="true" onclick="checkOutConfirmation();">Confirmation (Request to override all circulation alerts)<br>
+                            <input type="checkbox" id="checkOutChargeAcknowledged" name="checkOutChargeAcknowledged" value="true">Charge acknowledged<br>
+                            <label>Item identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="checkOutItemIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="checkOutPatronIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="checkOutHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="checkOutOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="checkOut();"><br>
+                    </div>
+
+                    <div id="renewal" class="panelStyle" style="display: none;">
+                        <label class="heading">RENEWAL</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="renewalSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="renewalSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="renewalValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Renewal Details</label><br>
+                            <input type="checkbox" name="renewalConfirmation" value="true" onclick="renewalConfirmation();">Confirmation (Request to override all circulation alerts)<br>
+                            <input type="checkbox" id="renewalChargeAcknowledged" name="renewalChargeAcknowledged" value="true">Charge acknowledged<br>
+                            <label>Item identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="renewalItemIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="renewalPatronIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="renewalHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="renewalOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="renewal();"><br>
+                    </div>
+
+                    <div id="addHold" class="panelStyle" style="display: none;">
+                        <label class="heading">PLACE RESERVATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="addHoldSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="addHoldSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="addHoldValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Reservation Details</label><br>
+                            <input type="checkbox" name="addHoldConfirmation" value="true" onclick="addHoldConfirmation();">Confirmation (Request to override all circulation alerts)<br>
+                            <input type="checkbox" id="addHoldChargeAcknowledged" name="addHoldChargeAcknowledged" value="true">Charge acknowledged<br>
+                            <label>Identifier Type</label><br>
+                            <input type="radio" name="addHoldIdentifierType" value="item" checked="checked">Item identifier (Barcode)
+                            <input type="radio" name="addHoldIdentifierType" value="brn">BRN (Bibliographic record number)<br>
+                            <label>Identifier</label>
+                            <label class="mand">*</label><br>
+                            <input id="addHoldIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="addHoldPatronIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Pickup location (XCODE)</label><br>
+                            <input id="addHoldPickupLocation" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="addHoldHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="addHoldOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="addHold();"><br>
+                    </div>
+
+                    <div id="updateHold" class="panelStyle" style="display: none;">
+                        <label class="heading">EDIT RESERVATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="updateHoldSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="updateHoldSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="updateHoldValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Reservation Details</label><br>
+                            <input type="checkbox" name="updateHoldConfirmation" value="true">Confirmation (Request to override all circulation alerts)<br>
+                            <label>Reservation identifier (IRN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="updateHoldIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Pickup location (XCODE)</label><br>
+                            <input id="updateHoldPickupLocation" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="updateHoldHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="updateHoldOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="updateHold();"><br>
+                    </div>
+
+                    <div id="removeHold" class="panelStyle" style="display: none;">
+                        <label class="heading">CANCEL RESERVATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="removeHoldSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="removeHoldSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="removeHoldValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Reservation Details</label><br>
+                            <input type="checkbox" name="removeHoldConfirmation" value="true">Confirmation (Request to override all circulation alerts)<br>
+                            <label>Reservation identifier (IRN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="removeHoldIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="removeHoldHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="removeHoldOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="removeHold();"><br>
+                    </div>
+
+                    <div id="payment" class="panelStyle" style="display: none;">
+                        <label class="heading">PATRON PAYMENT</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="paymentSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="paymentSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="paymentValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Payment Details</label><br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="paymentPatronIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Payment type</label>
+                            <label class="mand">*</label><br>
+                            <select id="paymentType">
+                                <option value="00">Cash</option>
+                                <option value="01">VISA</option>
+                                <option value="02">Credit card</option>
+                                <option value="03">Debit card</option>
+                                <option value="04">E-Payment</option>
+                                <option value="05">Cheque</option>
+                            </select><br>
+                            <label>Amount</label>
+                            <label class="mand">*</label><br>
+                            <input id="paymentAmount" type="text" value="" class="inputText"><br>
+                            <label>Transaction identifier (Kiosk payment reference)</label><br>
+                            <input id="paymentTransactionIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Charge(s) identifier (IRN)</label><br>
+                            <input id="paymentChargesIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="paymentHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="paymentOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="payment();"><br>
+                    </div>
+
+                    <div id="addCharge" class="panelStyle" style="display: none;">
+                        <label class="heading">ADD CHARGE</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="addChargeSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="addChargeSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="addChargeValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Charge Details</label><br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="addChargePatronIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Charge type</label><br>
+                            <select id="addChargeType">
+                                <option value="01">Other</option>
+                                <option value="03">Damage</option>
+                                <option value="04">Overdue</option>
+                                <option value="06">Rental</option>
+                                <option value="09">Reservation fee</option>
+                                <option value="10">Membership fee</option>
+                                <option value="11">Notice fee</option>
+                            </select><br>
+                            <label>Charge format</label><br>
+                            <select id="addChargeFormat">
+                                <option value="C">Charge</option>
+                                <option value="F">Fee</option>
+                            </select><br>
+                            <label>Amount</label>
+                            <label class="mand">*</label><br>
+                            <input id="addChargeAmount" type="text" value="" class="inputText"><br>
+                            <label>Note</label><br>
+                            <input id="addChargeNote" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="addChargeHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="addChargeOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="addCharge();"><br>
+                    </div>
+
+                    <div id="cancelCharge" class="panelStyle" style="display: none;">
+                        <label class="heading">CANCEL CHARGE</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="cancelChargeSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="cancelChargeSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="cancelChargeValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Charge Details</label><br>
+                            <label>Charge identifier (IRN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="cancelChargeIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="cancelChargeHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="cancelChargeOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="cancelCharge();"><br>
+                    </div>
+
+                    <div id="createPatron" class="panelStyle" style="display: none;">
+                        <label class="heading">CREATE PATRON</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="createPatronSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="createPatronSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="createPatronValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Patron Details</label><br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="createPatronPatronIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Password</label>
+                            <label class="mand">*</label><br>
+                            <input id="createPatronPassword" type="text" value="" class="inputText"><br>
+                            <label>Forename</label>
+                            <label class="mand">*</label><br>
+                            <input id="createPatronForename" type="text" value="" class="inputText"><br>
+                            <label>Surname</label>
+                            <label class="mand">*</label><br>
+                            <input id="createPatronSurname" type="text" value="" class="inputText"><br>
+                            <label>Location</label>
+                            <label class="mand">*</label><br>
+                            <input id="createPatronLocation" type="text" value="" class="inputText"><br>
+                            <label>Date of Birth</label>
+                            <label class="mand">*</label><br>
+                            <input id="createPatronDateOfBirth" type="text" value="" class="inputText"><br>
+                            <label>Registration Expiry</label><br>
+                            <input id="createPatronRegExpiry" type="text" value="" class="inputText"><br>
+                            <label>Username</label><br>
+                            <input id="createPatronUsername" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="createPatronHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="createPatronOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="createPatron();"><br>
+                    </div>
+
+                    <div id="updatePatron" class="panelStyle" style="display: none;">
+                        <label class="heading">UPDATE PATRON</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="updatePatronSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="updatePatronSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="updatePatronValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Patron Details</label><br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="updatePatronPatronIdentifier" type="text" value="" class="inputText2">
+                            <input type="button" value="Load" class="inputButton2" onclick="loadPatron();"><br>
+                            <label>New Patron identifier (Barcode)</label><br>
+                            <input id="updatePatronNewPatronIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Password</label>
+                            <label class="mand">*</label><br>
+                            <input id="updatePatronPassword" type="text" value="" class="inputText"><br>
+                            <label>Forename</label>
+                            <label class="mand">*</label><br>
+                            <input id="updatePatronForename" type="text" value="" class="inputText"><br>
+                            <label>Surname</label>
+                            <label class="mand">*</label><br>
+                            <input id="updatePatronSurname" type="text" value="" class="inputText"><br>
+                            <label>Location</label>
+                            <label class="mand">*</label><br>
+                            <input id="updatePatronLocation" type="text" value="" class="inputText"><br>
+                            <label>Date of Birth</label>
+                            <label class="mand">*</label><br>
+                            <input id="updatePatronDateOfBirth" type="text" value="" class="inputText"><br>
+                            <label>Registration Expiry</label><br>
+                            <input id="updatePatronRegExpiry" type="text" value="" class="inputText"><br>
+                            <label>Username</label><br>
+                            <input id="updatePatronUsername" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="updatePatronHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="updatePatronOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="updatePatron();"><br>
+                    </div>
+
+                    <div id="createContact" class="panelStyle" style="display: none;">
+                        <label class="heading">CREATE CONTACT</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="createContactSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="createContactSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="createContactValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Patron Details</label><br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="createContactPatronIdentifier" type="text" value="" class="inputText"><br>
+                            <label class="heading1">Contact Details</label><br>
+                            <label>Address Line 1</label><br>
+                            <input id="createContactAddLine1" type="text" value="" class="inputText"><br>
+                            <label>Address Line 2</label><br>
+                            <input id="createContactAddLine2" type="text" value="" class="inputText"><br>
+                            <label>Address Line 3</label><br>
+                            <input id="createContactAddLine3" type="text" value="" class="inputText"><br>
+                            <label>Suburb</label><br>
+                            <input id="createContactSuburb" type="text" value="" class="inputText"><br>
+                            <label>Postcode</label><br>
+                            <input id="createContactPostcode" type="text" value="" class="inputText"><br>
+                            <label>State</label><br>
+                            <input id="createContactState" type="text" value="" class="inputText"><br>
+                            <label>Country</label><br>
+                            <input id="createContactCountry" type="text" value="" class="inputText"><br>
+                            <label>Language</label><br>
+                            <input id="createContactLanguage" type="text" value="" class="inputText"><br>
+                            <label>Home phone number</label><br>
+                            <input id="createContactHomePhone" type="text" value="" class="inputText"><br>
+                            <label>Business phone number</label><br>
+                            <input id="createContactBusinessPhone" type="text" value="" class="inputText"><br>
+                            <label>Mobile phone number</label><br>
+                            <input id="createContactMobilePhone" type="text" value="" class="inputText"><br>
+                            <label>Email address</label><br>
+                            <input id="createContactEmail" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="createContactHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="createContactOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="createContact();"><br>
+                    </div>
+
+                    <div id="updateContact" class="panelStyle" style="display: none;">
+                        <label class="heading">UPDATE CONTACT</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="updateContactSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="updateContactSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="updateContactValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Contact Details</label><br>
+                            <label>Contact identifier (IRN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="updateContactPatronIdentifier" type="text" value="" class="inputText2">
+                            <input type="button" value="Load" class="inputButton2" onclick="loadContact();"><br>
+                            <label>Name</label><br>
+                            <input id="updateContactName" type="text" value="" class="inputText"><br>
+                            <label>Address Line 1</label><br>
+                            <input id="updateContactAddLine1" type="text" value="" class="inputText"><br>
+                            <label>Address Line 2</label><br>
+                            <input id="updateContactAddLine2" type="text" value="" class="inputText"><br>
+                            <label>Address Line 3</label><br>
+                            <input id="updateContactAddLine3" type="text" value="" class="inputText"><br>
+                            <label>Suburb</label><br>
+                            <input id="updateContactSuburb" type="text" value="" class="inputText"><br>
+                            <label>Postcode</label><br>
+                            <input id="updateContactPostcode" type="text" value="" class="inputText"><br>
+                            <label>State</label><br>
+                            <input id="updateContactState" type="text" value="" class="inputText"><br>
+                            <label>Country</label><br>
+                            <input id="updateContactCountry" type="text" value="" class="inputText"><br>
+                            <label>Language</label><br>
+                            <input id="createContactLanguage" type="text" value="" class="inputText"><br>
+                            <label>Home phone number</label><br>
+                            <input id="updateContactHomePhone" type="text" value="" class="inputText"><br>
+                            <label>Business phone number</label><br>
+                            <input id="updateContactBusinessPhone" type="text" value="" class="inputText"><br>
+                            <label>Mobile phone number</label><br>
+                            <input id="updateContactMobilePhone" type="text" value="" class="inputText"><br>
+                            <label>Email address</label><br>
+                            <input id="updateContactEmail" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="updateContactHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="updateContactOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="updateContact();"><br>
+                    </div>
+
+                    <div id="patronInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">PATRON INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="patronInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="patronInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="patronInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Patron Details</label><br>
+                            <label>Identifier Type</label><br>
+                            <input type="radio" name="patronIdentifierType" value="barcode" checked="checked">Patron barcode
+                            <input type="radio" name="patronIdentifierType" value="irn">Patron IRN<br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="patronInfoPatronIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="patronInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="patronInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="patronInfo();"><br>
+                    </div>
+
+                    <div id="contactInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">CONTACT INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="contactInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="contactInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="contactInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Contact Details</label><br>
+                            <label>Contact identifier (IRN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="contactInfoItemIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="contactInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="contactInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="contactInfo();"><br>
+                    </div>
+
+                    <div id="loanInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">LOAN INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="loanInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="loanInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="loanInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Loan Details</label><br>
+                            <label>Loan identifier (IRN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="loanInfoItemIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="loanInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="loanInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="loanInfo();"><br>
+                    </div>
+
+                    <div id="reservationInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">RESERVATION INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="reservationInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="reservationInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="reservationInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Reservation Details</label><br>
+                            <label>Reservation identifier (IRN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="reservationInfoItemIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="reservationInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="reservationInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="reservationInfo();"><br>
+                    </div>
+
+                    <div id="reservationCount" class="panelStyle" style="display: none;">
+                        <label class="heading">RESERVATION COUNT</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="reservationCountSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="reservationCountSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="reservationCountValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Reservation Count Details</label><br>
+                            <label>Title (ISBN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="reservationCountTitleIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Location identifier (XCODE)</label><br>
+                            <input id="reservationCountLocationIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="reservationCountHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="reservationCountOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="reservationCount();"><br>
+                    </div>
+
+                    <div id="chargeInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">CHARGE INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="chargeInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="chargeInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="chargeInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Charge Details</label><br>
+                            <label>Charge identifier (IRN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="chargeInfoItemIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="chargeInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="chargeInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="chargeInfo();"><br>
+                    </div>
+
+                    <div id="paymentInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">PAYMENT INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="paymentInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="paymentInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="paymentInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Payment Details</label><br>
+                            <label>Payment identifier (Receipt ID)</label>
+                            <label class="mand">*</label><br>
+                            <input id="paymentInfoItemIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="paymentInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="paymentInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="paymentInfo();"><br>
+                    </div>
+
+                    <div id="locationInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">LOCATION INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="locationInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="locationInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="locationInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Location Details</label><br>
+                            <label>Location identifier (XCODE)</label>
+                            <label class="mand">*</label><br>
+                            <input id="locationInfoItemIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="locationInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="locationInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="locationInfo();"><br>
+                    </div>
+
+                    <div id="itemInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">ITEM INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="itemInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="itemInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="itemInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Item Details</label><br>
+                            <label>Item identifier (Barcode or RFID)</label>
+                            <label class="mand">*</label><br>
+                            <input id="itemInfoItemIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="itemInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="itemInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="itemInfo();"><br>
+                    </div>
+
+                    <div id="itemCount" class="panelStyle" style="display: none;">
+                        <label class="heading">ITEM COUNT</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="itemCountSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="itemCountSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="itemCountValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Item Count Details</label><br>
+                            <label>Title (ISBN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="itemCountTitleIdentifier" type="text" value="" class="inputText"><br>
+                            <label>Location identifier (XCODE)</label><br>
+                            <input id="itemCountLocationIdentifier" type="text" value="" class="inputText"><br>
+                            <input type="checkbox" name="itemCountIncludeOnOrder" value="true">Include on order titles<br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="itemCountHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="itemCountOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="itemCount();"><br>
+                    </div>
+
+                    <div id="bibliographicInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">BIBLIOGRAPHIC INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="bibliographicInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="bibliographicInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="bibliographicInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Bibliographic Details</label><br>
+                            <label>Bibliographic identifier (BRN)</label>
+                            <label class="mand">*</label><br>
+                            <input id="bibliographicInfoItemIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="bibliographicInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="bibliographicInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="bibliographicInfo();"><br>
+                    </div>
+
+                    <div id="lookupInfo" class="panelStyle" style="display: none;">
+                        <label class="heading">LOOKUP INFORMATION</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="lookupInfoSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="lookupInfoSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="lookupInfoValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Lookup Details</label><br>
+                            <label>Lookup identifier (Table ID)</label>
+                            <label class="mand">*</label><br>
+                            <input id="lookupInfoItemIdentifier" type="text" value="" class="inputText"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="lookupInfoHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="lookupInfoOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="lookupInfo();"><br>
+                    </div>
+
+                    <div id="patronSearch" class="panelStyle" style="display: none;">
+                        <label class="heading">PATRON SEARCH</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="patronSearchSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="patronSearchSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="patronSearchValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Search Details</label><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="patronSearchHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="patronSearchOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="patronSearch();"><br>
+                    </div>
+
+                    <div id="contactSearch" class="panelStyle" style="display: none;">
+                        <label class="heading">CONTACT SEARCH</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="contactSearchSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="contactSearchSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="contactSearchValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Search Details</label><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="contactSearchHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="contactSearchOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="contactSearch();"><br>
+                    </div>
+
+                    <div id="loanSearch" class="panelStyle" style="display: none;">
+                        <label class="heading">LOAN SEARCH</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="loanSearchSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="loanSearchSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="loanSearchValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Search Details</label><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="contactSearchHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="loanSearchOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="loanSearch();"><br>
+                    </div>
+
+                    <div id="reservationSearch" class="panelStyle" style="display: none;">
+                        <label class="heading">RESERVATION SEARCH</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="reservationSearchSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="reservationSearchSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="reservationSearchValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Search Details</label><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="reservationSearchHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="reservationSearchOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="reservationSearch();"><br>
+                    </div>
+
+                    <div id="chargeSearch" class="panelStyle" style="display: none;">
+                        <label class="heading">CHARGE SEARCH</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="chargeSearchSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="chargeSearchSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="chargeSearchValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Search Details</label><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="chargeSearchHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="chargeSearchOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="chargeSearch();"><br>
+                    </div>
+
+                    <div id="paymentSearch" class="panelStyle" style="display: none;">
+                        <label class="heading">PAYMENT SEARCH</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="paymentSearchSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="paymentSearchSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="paymentSearchValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Search Details</label><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="paymentSearchHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="paymentSearchOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="paymentSearch();"><br>
+                    </div>
+
+                    <div id="locationSearch" class="panelStyle" style="display: none;">
+                        <label class="heading">LOCATION SEARCH</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="locationSearchSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="locationSearchSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="locationSearchValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Search Details</label><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="locationSearchHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="locationSearchOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="locationSearch();"><br>
+                    </div>
+
+                    <div id="itemSearch" class="panelStyle" style="display: none;">
+                        <label class="heading">ITEM SEARCH</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="itemSearchSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="itemSearchSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="itemSearchValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Search Details</label><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="itemSearchHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="itemSearchOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="itemSearch();"><br>
+                    </div>
+
+                    <div id="bibliographicSearch" class="panelStyle" style="display: none;">
+                        <label class="heading">BIBLIOGRAPHIC SEARCH</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="bibliographicSearchSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="bibliographicSearchSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="bibliographicSearchValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">Search Details</label><br>
+                            <input id="bibliographicQueryString" type="text" value="" class="inputText" style="width: 100%;"><br>
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="bibliographicSearchHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="bibliographicSearchOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="bibliographicSearch();"><br>
+                    </div>
+
+                    <div id="opacLogin" class="panelStyle" style="display: none;">
+                        <label class="heading">OPAC LOGIN</label>
+                        <br>
+                        <span style="font-family:Calibri">
+                            <label>Serialization</label><br>
+                            <input type="radio" name="opacLoginSerType" value="xml" checked="checked">XML
+                            <input type="radio" name="opacLoginSerType" value="json">JSON<br>
+                            <label class="heading1">Authentication</label><br>
+                            <input type="checkbox" name="opacLoginValidatePatronToken" value="true">Validate patron token<br>
+                            <label class="heading1">OPAC Login Details</label><br>
+                            <label>Patron identifier (Barcode)</label>
+                            <label class="mand">*</label><br>
+                            <input id="opacLoginItemIdentifier" type="text" value="" class="inputText"><br>
+                            <input type="checkbox" name="opacLoginRedirect" value="true">Redirect<br>
+
+                        </span>
+                        <span style="font-family:Calibri">
+                            <label class="heading1">Response</label><br>
+                            <label>HTTP Status</label><br>
+                            <input id="opacLoginHttpStatus" type="text" value="" readonly="readonly" tabindex="-1" class="inputText"><br>
+                        </span>
+                        <div id="opacLoginOutput" class="outputDiv"></div>
+                        <input type="button" value="Invoke" class="inputButton" onclick="opacLogin();"><br>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody></table>
+    </div>
+
+
+</body></html>
