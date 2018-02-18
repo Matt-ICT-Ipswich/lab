@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://webapi-spydus.civica.com.au/client.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>I.L. 1.0 API Development Client</title>
+    
+</head>
+<body onload="initialize();">
+
+    <script src="./Spydus10 API Development Client_files/jquery-2.0.3.min.js"></script>
+    <script src="./Spydus10 API Development Client_files/jquery.base64.js"></script>
+    <script src="./Spydus10 API Development Client_files/Client.js"></script>
+
+    <div>
+
+    Testing Authentication</br></br>
+    <!-- Authentication Settings to be set Server side in Production -->
+        <input type="HIDDEN" id="authVendorSerType" value="json">   
+        <input type="HIDDEN" id="authVendorKey" value="3B012E1A5B4AA3EA44F235A15D13B831" > 
+        <input type="HIDDEN" id="authVendorUsername" value="TESTVENDOR" >    
+        <input type="HIDDEN" id="authVendorPassword" value="tv" >    
+        <input type="HIDDEN" id="authVendorInstitutionId" value="VBAY">    
+        <input type="HIDDEN" id="authVendorLibarayId" value="BEA" >    
+        <input type="HIDDEN" id="authVendorExpires" value="0">
+        <!--
+        <input type="button" id="authentication" value="Authentication" class="menuMainButton" onclick="authenticateVendor()">
+
+    <p id="authentication_results"></p>
+-->
+
+    <label class="heading">Get Bib Info via BRN</label>     
+    <input type="hidden" id="bibliographicInfoValidatePatronToken" value="false">
+    <label class="heading1">Item Details</label><br>
+    <label>Item identifier (BRN)</label>  
+    <input id="bibliographicInfoItemIdentifier" type="text" value="80925" class="inputText"><br>
+    </span>
+   
+    
+    <p id="bib_results"></p>
+<!--
+         
+        var itemIdentifier = $('#itemInfoItemIdentifier').val().trim();
+        var validatePatronToken = $('input[name="itemInfoValidatePatronToken"]:checked').val();
+        if (validatePatronToken != 'true')
+            validatePatronToken = false;
+-->
+
+
+    <input type="button" value="Look up book" class="inputButton" onclick="bibliographicInfo();"><br>
+                    
+
+
+
+
+
+    </div>
+
+</body>
+</html>
