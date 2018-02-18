@@ -1,6 +1,8 @@
 
-var AccessToken = "";
+var AccessToken = "DSuQvibcoWdiMZVYWASC/E4k5z6pbsPSgN+Gg/Ql416V+cWRiZ4ekeoK4R4RuTrmwDu9+S2wxA/wIr1FmyQSBDPpq6kV7g/KUL5YCWNlXlOaujVIEJ47AhYw8NWjRMDZHde4cJrx/JsURNSfkU3GRKZ6ezOzuPEQcJRs6Opy7wGKHvpp/eLdVO+InCb7R62GNaQauUzr7FwbUP5n8944ZByyKtvMcoB5NxoXGZmya+j3N2aV4A/nqKizS52KKYIlQpRI58RZP0vB7fZjgZrXvrbHVVijkw3mq9yA9bM3quCPwDP5zLIFKWvNst/cT//yqcObTWulPCtP4jDO4FLaR6cTkUPR5qIJ";
 var PatronToken = "";
+var api_url= "http://webapi-spydus.civica.com.au/";
+var serialization = "json";
 
 function initialize() {
     menuMainItemClick('authentication')
@@ -199,14 +201,18 @@ function menuItemClick(selection) {
 
 function authenticateVendor() {
     try {
-        var serialization = $('input[name="authVendorSerType"]:checked').val();
+
+       
+        console.log("attempting vendor authentication");
+
+       // var serialization =  $('#authVendorSerType').val();
         var username = $('#authVendorUsername').val().trim();
         var password = $('#authVendorPassword').val().trim();
         var institutionId = $('#authVendorInstitutionId').val().trim();
         var libraryId = $('#authVendorLibarayId').val().trim();
         var expires = $('#authVendorExpires').val().trim();
         var key = $('#authVendorKey').val().trim().trim();
-        var url = "http://webapi-spydus.civica.com.au/lcf/1.0/Authenticate/vendor";
+        var url = api_url + "lcf/1.0/Authenticate/vendor";
         var authorization = 'Basic ' + $.base64.btoa(key + ':' + username + ':' + password + ':' + institutionId + ':' + libraryId);
         var request = "";
 
@@ -238,6 +244,17 @@ function authenticateVendor() {
                 if (serialization == 'json') {
                     AccessToken = data.Access_Token;
                     response = JSON.stringify(data);
+                    console.log(response);                   
+                    //for (var prop in data){
+                        //document.getElementById("authentication_results").innerHTML += prop += "=" + data[prop] + "</br>"; 
+                        //Set Authentication
+                        AccessToken = data["Access_Token"]; 
+                        document.getElementById("authentication_results").innerHTML = "AccessToken = " + AccessToken +"</br>"; 
+                                      
+                    //}
+
+                    //document.getElementById("results").innerHTML = response; 
+
                 }
                 else {
                     var xmlString;
@@ -276,11 +293,11 @@ function authenticateVendor() {
 
 function authenticatePatron() {
     try {
-        var serialization = $('input[name="authPatronSerType"]:checked').val();
+       // var serialization = $('input[name="authPatronSerType"]:checked').val();
         var username = $('#authPatronUsername').val().trim();
         var password = $('#authPatronPassword').val().trim();
         var expires = $('#authPatronExpires').val().trim();
-        var url = "lcf/1.0/Authenticate/patron";
+        var url = api_url + "lcf/1.0/Authenticate/patron";
         var authorization = 'Bearer ' + AccessToken;
         var patronAuth = 'Basic ' + $.base64.btoa(username + ':' + password);
         var request = "";
@@ -348,9 +365,9 @@ function authenticatePatron() {
 function validateBearerToken() {
     try {
         var token = $('#validateBearerToken').val().trim();
-        var serialization = $('input[name="validateBearerTokenSerType"]:checked').val();
+       // var serialization = $('input[name="validateBearerTokenSerType"]:checked').val();
         var tokenType = $('input[name="validateBearerTokenType"]:checked').val();
-        var url = "lcf/1.0/validatetoken/" + tokenType;
+        var url = api_url + "lcf/1.0/validatetoken/" + tokenType;
         var request = "";
 
         if (token == "")
@@ -416,9 +433,9 @@ function validateBearerToken() {
 
 function patronInfo() {
     try {
-        var url = "lcf/1.0/patron/";
+        var url = api_url + "lcf/1.0/patron/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="patronInfoSerType"]:checked').val();
+       // var serialization = $('input[name="patronInfoSerType"]:checked').val();
         var patronIdentifier = $('#patronInfoPatronIdentifier').val().trim();
         var identifierType = $('input[name="patronIdentifierType"]:checked').val();
         var validatePatronToken = $('input[name="patronInfoValidatePatronToken"]:checked').val();
@@ -485,9 +502,9 @@ function patronInfo() {
 function contactInfo() {
     try {
 
-        var url = "lcf/1.0/contact/";
+        var url = api_url + "lcf/1.0/contact/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="contactInfoSerType"]:checked').val();
+       // var serialization = $('input[name="contactInfoSerType"]:checked').val();
         var contactIdentifier = $('#contactInfoItemIdentifier').val().trim();
         var validatePatronToken = $('input[name="contactInfoValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -549,9 +566,9 @@ function contactInfo() {
 
 function loanInfo() {
     try {
-        var url = "lcf/1.0/loan/";
+        var url = api_url + "lcf/1.0/loan/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="loanInfoSerType"]:checked').val();
+       // var serialization = $('input[name="loanInfoSerType"]:checked').val();
         var loanIdentifier = $('#loanInfoItemIdentifier').val().trim();
         var validatePatronToken = $('input[name="loanInfoValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -613,9 +630,9 @@ function loanInfo() {
 
 function reservationInfo() {
     try {
-        var url = "lcf/1.0/reservation/";
+        var url = api_url + "lcf/1.0/reservation/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="reservationInfoSerType"]:checked').val();
+       // var serialization = $('input[name="reservationInfoSerType"]:checked').val();
         var reservationIdentifier = $('#reservationInfoItemIdentifier').val().trim();
         var validatePatronToken = $('input[name="reservationInfoValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -677,9 +694,9 @@ function reservationInfo() {
 
 function reservationCount() {
     try {
-        var url = "lcf/1.0/reservationcount/";
+        var url = api_url + "lcf/1.0/reservationcount/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="reservationCountSerType"]:checked').val();
+       // var serialization = $('input[name="reservationCountSerType"]:checked').val();
         var titleIdentifier = $('#reservationCountTitleIdentifier').val().trim();
         var validatePatronToken = $('input[name="reservationCountValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -747,9 +764,9 @@ function reservationCount() {
 
 function chargeInfo() {
     try {
-        var url = "lcf/1.0/charge/";
+        var url = api_url + "lcf/1.0/charge/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="chargeInfoSerType"]:checked').val();
+       // var serialization = $('input[name="chargeInfoSerType"]:checked').val();
         var chargeIdentifier = $('#chargeInfoItemIdentifier').val().trim();
         var validatePatronToken = $('input[name="chargeInfoValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -813,9 +830,9 @@ function chargeInfo() {
 function paymentInfo() {
     try {
 
-        var url = "lcf/1.0/payment/";
+        var url = api_url + "lcf/1.0/payment/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="paymentInfoSerType"]:checked').val();
+       // var serialization = $('input[name="paymentInfoSerType"]:checked').val();
         var paymentIdentifier = $('#paymentInfoItemIdentifier').val().trim();
         var validatePatronToken = $('input[name="paymentInfoValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -878,9 +895,9 @@ function paymentInfo() {
 
 function locationInfo() {
     try {
-        var url = "lcf/1.0/location/";
+        var url = api_url + "lcf/1.0/location/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="locationInfoSerType"]:checked').val();
+       // var serialization = $('input[name="locationInfoSerType"]:checked').val();
         var locationIdentifier = $('#locationInfoItemIdentifier').val().trim();
         var validatePatronToken = $('input[name="locationInfoValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -943,9 +960,9 @@ function locationInfo() {
 function itemInfo() {
     try {
 
-        var url = "lcf/1.0/item/";
+        var url = api_url + "lcf/1.0/item/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="itemInfoSerType"]:checked').val();
+       // var serialization = $('input[name="itemInfoSerType"]:checked').val();
         var itemIdentifier = $('#itemInfoItemIdentifier').val().trim();
         var validatePatronToken = $('input[name="itemInfoValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -975,6 +992,8 @@ function itemInfo() {
                 var response;
                 if (serialization == 'json') {
                     response = JSON.stringify(data);
+                      
+
                 }
                 else {
                     var xmlString;
@@ -1007,9 +1026,9 @@ function itemInfo() {
 
 function itemCount() {
     try {
-        var url = "lcf/1.0/itemcount/";
+        var url = api_url + "lcf/1.0/itemcount/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="itemCountSerType"]:checked').val();
+       // var serialization = $('input[name="itemCountSerType"]:checked').val();
         var titleIdentifier = $('#itemCountTitleIdentifier').val().trim();
         var validatePatronToken = $('input[name="itemCountValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -1088,11 +1107,11 @@ function itemCount() {
 function bibliographicInfo() {
     try {
 
-        var url = "lcf/1.0/manifestation/";
+        var url = api_url + "lcf/1.0/manifestation/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="bibliographicInfoSerType"]:checked').val();
+       // var serialization = $('input[name="bibliographicInfoSerType"]:checked').val();
         var manifestationIdentifier = $('#bibliographicInfoItemIdentifier').val().trim();
-        var validatePatronToken = $('input[name="bibliographicInfoValidatePatronToken"]:checked').val();
+        var validatePatronToken = $('#bibliographicInfoValidatePatronToken').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
         var request = "";
@@ -1119,7 +1138,34 @@ function bibliographicInfo() {
             success: function (data, http, xhr) {
                 var response;
                 if (serialization == 'json') {
-                    response = JSON.stringify(data);
+                   response = JSON.stringify(data);
+
+                   additional_array = data["additional-manifestation-id"];
+                   var arr_count=0;
+                   //Get ISBN
+                   for (var prop in additional_array){   
+                           //ISBN is stored in manifestation type : 03                     
+                        if (additional_array[arr_count]["manifestation-id-type"] == "03"){
+                            var myISBN = additional_array[arr_count]["value"];                            
+                        }
+                       arr_count++;
+                    }
+                    //Get Title
+
+                    //title-text
+                    var myTitle = data["title"][0]["title-text"];
+                    console.log(myTitle);
+                   
+
+
+
+
+                    console.log(data);
+                  
+                  document.getElementById("bib_results").innerHTML ='<h1> '+myTitle+'</h1><img src="https://secure.syndetics.com/index.aspx?isbn='+myISBN+'/lc.gif&client=civspytest"/>'
+
+                   ;
+
                 }
                 else {
                     var xmlString;
@@ -1152,9 +1198,9 @@ function bibliographicInfo() {
 
 function lookupInfo() {
     try {
-        var url = "lcf/1.0/lookup/";
+        var url = api_url + "lcf/1.0/lookup/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="lookupInfoSerType"]:checked').val();
+       // var serialization = $('input[name="lookupInfoSerType"]:checked').val();
         var lookupIdentifier = $('#lookupInfoItemIdentifier').val().trim();
         var validatePatronToken = $('input[name="lookupInfoValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -1216,9 +1262,9 @@ function lookupInfo() {
 
 function checkIn() {
     try {
-        var url = "lcf/1.0/loan/";
+        var url = api_url + "lcf/1.0/loan/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="checkInSerType"]:checked').val();
+       // var serialization = $('input[name="checkInSerType"]:checked').val();
         var identifier = $('#checkInIdentifier').val().trim();
         var identifierType = $('input[name="checkInIdentifierType"]:checked').val();
         var validatePatronToken = $('input[name="checkInValidatePatronToken"]:checked').val();
@@ -1307,9 +1353,9 @@ function checkOutConfirmation() {
 
 function checkOut() {
     try {
-        var url = "lcf/1.0/loan";
+        var url = api_url + "lcf/1.0/loan";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="checkOutSerType"]:checked').val();
+       // var serialization = $('input[name="checkOutSerType"]:checked').val();
         var itemIdentifier = $('#checkOutItemIdentifier').val().trim();
         var patronIdentifier = $('#checkOutPatronIdentifier').val().trim();
         var validatePatronToken = $('input[name="checkOutValidatePatronToken"]:checked').val();
@@ -1409,9 +1455,9 @@ function renewalConfirmation() {
 
 function renewal() {
     try {
-        var url = "lcf/1.0/loan";
+        var url = api_url + "lcf/1.0/loan";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="renewalSerType"]:checked').val();
+       // var serialization = $('input[name="renewalSerType"]:checked').val();
         var itemIdentifier = $('#renewalItemIdentifier').val().trim();
         var patronIdentifier = $('#renewalPatronIdentifier').val().trim();
         var validatePatronToken = $('input[name="renewalValidatePatronToken"]:checked').val();
@@ -1511,9 +1557,9 @@ function addHoldConfirmation() {
 
 function addHold() {
     try {
-        var url = "lcf/1.0/reservation";
+        var url = api_url + "lcf/1.0/reservation";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="addHoldSerType"]:checked').val();
+       // var serialization = $('input[name="addHoldSerType"]:checked').val();
         var identifier = $('#addHoldIdentifier').val().trim();
         var patronIdentifier = $('#addHoldPatronIdentifier').val().trim();
         var pickupLocation = $('#addHoldPickupLocation').val().trim();
@@ -1631,9 +1677,9 @@ function addHold() {
 
 function updateHold() {
     try {
-        var url = "lcf/1.0/reservation/";
+        var url = api_url + "lcf/1.0/reservation/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="updateHoldSerType"]:checked').val();
+       // var serialization = $('input[name="updateHoldSerType"]:checked').val();
         var reservationIdentifier = $('#updateHoldIdentifier').val().trim();
         var pickupLocation = $('#updateHoldPickupLocation').val().trim();
         var validatePatronToken = $('input[name="updateHoldValidatePatronToken"]:checked').val();
@@ -1718,9 +1764,9 @@ function updateHold() {
 
 function removeHold() {
     try {
-        var url = "lcf/1.0/reservation/";
+        var url = api_url + "lcf/1.0/reservation/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="removeHoldSerType"]:checked').val();
+       // var serialization = $('input[name="removeHoldSerType"]:checked').val();
         var reservationIdentifier = $('#removeHoldIdentifier').val().trim();
         var validatePatronToken = $('input[name="removeHoldValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -1791,9 +1837,9 @@ function removeHold() {
 
 function payment() {
     try {
-        var url = "lcf/1.0/payment";
+        var url = api_url + "lcf/1.0/payment";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="paymentSerType"]:checked').val();
+       // var serialization = $('input[name="paymentSerType"]:checked').val();
         var patronIdentifier = $('#paymentPatronIdentifier').val().trim();
         var transactionIdentifier = $('#paymentTransactionIdentifier').val().trim();
         var amount = $('#paymentAmount').val().trim();
@@ -1902,9 +1948,9 @@ function payment() {
 function addCharge() {
     try {
 
-        var url = "lcf/1.0/charge/";
+        var url = api_url + "lcf/1.0/charge/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="addChargeSerType"]:checked').val();
+       // var serialization = $('input[name="addChargeSerType"]:checked').val();
         var patronIdentifier = $('#addChargePatronIdentifier').val().trim();
         var amount = $('#addChargeAmount').val().trim();
         var chargeType = document.getElementById("addChargeType").value;
@@ -2003,9 +2049,9 @@ function addCharge() {
 
 function cancelCharge() {
     try {
-        var url = "lcf/1.0/charge/";
+        var url = api_url + "lcf/1.0/charge/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="cancelChargeSerType"]:checked').val();
+       // var serialization = $('input[name="cancelChargeSerType"]:checked').val();
         var chargeIdentifier = $('#cancelChargeIdentifier').val().trim();
         var validatePatronToken = $('input[name="cancelChargeValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
@@ -2072,9 +2118,9 @@ function patronSearch() {
 
         throw new Error("Currently not implemented.");
 
-        var url = "lcf/1.0/patron";
+        var url = api_url + "lcf/1.0/patron";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="patronSearchSerType"]:checked').val();
+       // var serialization = $('input[name="patronSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="patronSearchValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -2138,9 +2184,9 @@ function contactSearch() {
 
         throw new Error("Currently not implemented.");
 
-        var url = "lcf/1.0/contact";
+        var url = api_url + "lcf/1.0/contact";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="contactSearchSerType"]:checked').val();
+       // var serialization = $('input[name="contactSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="contactSearchValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -2204,9 +2250,9 @@ function loanSearch() {
 
         throw new Error("Currently not implemented.");
 
-        var url = "lcf/1.0/loan";
+        var url = api_url + "lcf/1.0/loan";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="loanSearchSerType"]:checked').val();
+       // var serialization = $('input[name="loanSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="loanSearchValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -2270,9 +2316,9 @@ function reservationSearch() {
 
         throw new Error("Currently not implemented.");
 
-        var url = "lcf/1.0/reservation";
+        var url = api_url + "lcf/1.0/reservation";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="reservationSearchSerType"]:checked').val();
+       // var serialization = $('input[name="reservationSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="reservationSearchValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -2336,9 +2382,9 @@ function chargeSearch() {
 
         throw new Error("Currently not implemented.");
 
-        var url = "lcf/1.0/charge";
+        var url = api_url + "lcf/1.0/charge";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="chargeSearchSerType"]:checked').val();
+       // var serialization = $('input[name="chargeSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="chargeSearchValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -2402,9 +2448,9 @@ function paymentSearch() {
 
         throw new Error("Currently not implemented.");
 
-        var url = "lcf/1.0/payment";
+        var url = api_url + "lcf/1.0/payment";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="paymentSearchSerType"]:checked').val();
+       // var serialization = $('input[name="paymentSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="paymentSearchValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -2468,9 +2514,9 @@ function locationSearch() {
 
         throw new Error("Currently not implemented.");
 
-        var url = "lcf/1.0/location";
+        var url = api_url + "lcf/1.0/location";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="locationSearchSerType"]:checked').val();
+       // var serialization = $('input[name="locationSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="locationSearchValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -2534,9 +2580,9 @@ function itemSearch() {
 
         throw new Error("Currently not implemented.");
 
-        var url = "lcf/1.0/item";
+        var url = api_url + "lcf/1.0/item";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="itemSearchSerType"]:checked').val();
+       // var serialization = $('input[name="itemSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="itemSearchValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -2598,9 +2644,9 @@ function itemSearch() {
 function bibliographicSearch() {
     try {
 
-        var url = "lcf/1.0/manifestation";
+        var url = api_url + "lcf/1.0/manifestation";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="bibliographicSearchSerType"]:checked').val();
+       // var serialization = $('input[name="bibliographicSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="bibliographicSearchValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -2661,9 +2707,9 @@ function bibliographicSearch() {
 
 function createPatron() {
     try {
-        var url = "lcf/1.0/patron";
+        var url = api_url + "lcf/1.0/patron";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="createPatronSerType"]:checked').val();
+       // var serialization = $('input[name="createPatronSerType"]:checked').val();
         var patronIdentifier = $('#createPatronPatronIdentifier').val().trim();
         var password = $('#createPatronPassword').val().trim();
         var username = $('#createPatronUsername').val().trim();
@@ -2796,9 +2842,9 @@ function createPatron() {
 
 function loadPatron() {
     try {
-        var url = "lcf/1.0/patron/";
+        var url = api_url + "lcf/1.0/patron/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = "json";
+       // var serialization = "json";
         var patronIdentifier = $('#updatePatronPatronIdentifier').val().trim();
 
         var validatePatronToken = $('input[name="patronInfoValidatePatronToken"]:checked').val();
@@ -2890,9 +2936,9 @@ function loadPatron() {
 
 function updatePatron() {
     try {
-        var url = "lcf/1.0/patron/";
+        var url = api_url + "lcf/1.0/patron/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="updatePatronSerType"]:checked').val();
+       // var serialization = $('input[name="updatePatronSerType"]:checked').val();
         var patronIdentifier = $('#updatePatronPatronIdentifier').val().trim();
         var patronNewIdentifier = $('#updatePatronNewPatronIdentifier').val().trim();
         var password = $('#updatePatronPassword').val().trim();
@@ -3031,9 +3077,9 @@ function updatePatron() {
 function createContact() {
     try {
 
-        var url = "lcf/1.0/contact";
+        var url = api_url + "lcf/1.0/contact";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="createContactSerType"]:checked').val();
+       // var serialization = $('input[name="createContactSerType"]:checked').val();
         var patronIdentifier = $('#createContactPatronIdentifier').val().trim();
         var addressLine1 = $('#createContactAddLine1').val().trim();
         var addressLine2 = $('#createContactAddLine2').val().trim();
@@ -3187,9 +3233,9 @@ function createContact() {
 
 function loadContact() {
     try {
-        var url = "lcf/1.0/contact/";
+        var url = api_url + "lcf/1.0/contact/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = "json";
+       // var serialization = "json";
         var patronIdentifier = $('#updateContactPatronIdentifier').val().trim();
 
         var validatePatronToken = $('input[name="updateContactValidatePatronToken"]:checked').val();
@@ -3294,9 +3340,9 @@ function loadContact() {
 function updateContact() {
     try {
 
-        var url = "lcf/1.0/contact/";
+        var url = api_url + "lcf/1.0/contact/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="updateContactSerType"]:checked').val();
+       // var serialization = $('input[name="updateContactSerType"]:checked').val();
         var contactIdentifier = $('#updateContactPatronIdentifier').val().trim();
         var addressLine1 = $('#updateContactAddLine1').val().trim();
         var addressLine2 = $('#updateContactAddLine2').val().trim();
@@ -3422,9 +3468,9 @@ function updateContact() {
 
 function opacLogin() {
     try {
-        var url = "lcf/1.0/opaclogin/";
+        var url = api_url + "lcf/1.0/opaclogin/";
         var authorization = 'Bearer ' + AccessToken;
-        var serialization = $('input[name="opacLoginSerType"]:checked').val();
+       // var serialization = $('input[name="opacLoginSerType"]:checked').val();
         var patronIdentifier = $('#opacLoginItemIdentifier').val().trim();
         var validatePatronToken = $('input[name="opacLoginValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
