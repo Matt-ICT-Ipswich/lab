@@ -23,7 +23,6 @@ function menuMainItemClick(selection) {
 
     if (selection == 'authentication') {
         authenticationMenu.style.display = 'block';
-        
         menuItemClick('authVendor');
     } else if (selection == 'circulation') {
         circulationMenu.style.display = 'block';
