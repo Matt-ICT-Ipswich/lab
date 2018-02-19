@@ -297,6 +297,7 @@ function authenticatePatron() {
         var username = $('#authPatronUsername').val().trim();
         var password = $('#authPatronPassword').val().trim();
         var expires = $('#authPatronExpires').val().trim();
+        var expires = "10";
         var url = api_url + "lcf/1.0/Authenticate/patron";
         var authorization = 'Bearer ' + AccessToken;
         var patronAuth = 'Basic ' + $.base64.btoa(username + ':' + password);
@@ -318,13 +319,19 @@ function authenticatePatron() {
                 request.setRequestHeader("Content-Type", 'application/' + serialization + '; charset=utf-8');
                 if (expires != '')
                     request.setRequestHeader("TKN_EXP", expires);
-                request.setRequestHeader("PATRON_AUTH", patronAuth);
+                    request.setRequestHeader("PATRON_AUTH", patronAuth);
             },
             success: function (data, http, xhr) {
                 var response;
                 if (serialization == 'json') {
                     PatronToken = data.Access_Token;
                     response = JSON.stringify(data);
+
+                    console.log(response);
+                    var PatronToken = data["Access_Token"]; 
+                    document.getElementById("auth_patron_results").innerHTML = "PatronToken = " +PatronToken +"</br>"; 
+                        
+
                 }
                 else {
                     var xmlString;
@@ -435,10 +442,18 @@ function patronInfo() {
     try {
         var url = api_url + "lcf/1.0/patron/";
         var authorization = 'Bearer ' + AccessToken;
+
        // var serialization = $('input[name="patronInfoSerType"]:checked').val();
-        var patronIdentifier = $('#patronInfoPatronIdentifier').val().trim();
-        var identifierType = $('input[name="patronIdentifierType"]:checked').val();
-        var validatePatronToken = $('input[name="patronInfoValidatePatronToken"]:checked').val();
+       // var patronIdentifier = $('#patronInfoPatronIdentifier').val().trim();
+        
+        var patronIdentifier = $('#authPatronUsername').val().trim();
+        //var identifierType = $('input[name="patronIdentifierType"]:checked').val();
+
+        var identifierType = "barcode";
+        //var validatePatronToken = $('input[name="patronInfoValidatePatronToken"]:checked').val();
+
+        var  validatePatronToken = 'true';
+
         if (validatePatronToken != 'true')
             validatePatronToken = false;
         var request = "";
@@ -448,8 +463,8 @@ function patronInfo() {
 
         url += patronIdentifier;
 
-        if (identifierType == "irn")
-            url += "?id-type=irn";
+       // if (identifierType == "irn")
+            //url += "?id-type=irn";
 
         $('#patronInfoHttpStatus').val('');
         $('#patronInfoOutput').text('');
@@ -461,14 +476,28 @@ function patronInfo() {
                 request.setRequestHeader("Authorization", authorization);
                 request.setRequestHeader("Accept", 'application/' + serialization);
                 request.setRequestHeader("Content-Type", 'application/' + serialization + '; charset=utf-8');
-                if (validatePatronToken)
+                if (validatePatronToken){
                     request.setRequestHeader("PATRON_AUTH", PatronToken);
+
+
+                    console.log("PatronToken=" +PatronToken );
+                }
             },
             data: request,
             success: function (data, http, xhr) {
                 var response;
                 if (serialization == 'json') {
                     response = JSON.stringify(data);
+                    console.log("Patron look up:" + response)
+
+                    for (var prop in data){
+                        document.getElementById("patron_results").innerHTML += prop += "=" + data[prop] + "</br>"; 
+                        //Set Authentication
+                      // AccessToken = data["Access_Token"]; 
+                       // document.getElementById("authentication_results").innerHTML = "AccessToken = " + AccessToken +"</br>"; 
+                                      
+                    }
+
                 }
                 else {
                     var xmlString;
@@ -1104,13 +1133,14 @@ function itemCount() {
     }
 }
 
-function bibliographicInfo() {
+function bibliographicInfo(myBrn){
     try {
 
         var url = api_url + "lcf/1.0/manifestation/";
         var authorization = 'Bearer ' + AccessToken;
        // var serialization = $('input[name="bibliographicInfoSerType"]:checked').val();
-        var manifestationIdentifier = $('#bibliographicInfoItemIdentifier').val().trim();
+       // var manifestationIdentifier = $('#bibliographicInfoItemIdentifier').val().trim();
+       var manifestationIdentifier = myBrn;
         var validatePatronToken = $('#bibliographicInfoValidatePatronToken').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
@@ -1152,17 +1182,19 @@ function bibliographicInfo() {
                     }
                     //Get Title
 
-                    //title-text
+                   
                     var myTitle = data["title"][0]["title-text"];
                     console.log(myTitle);
+                    console.log(data);
+
+                    if ( document.getElementById("bib_results").innerHTML =='Loading Item Details')
+                         document.getElementById("bib_results").innerHTML ='';
+                  
+                    document.getElementById("bib_results").innerHTML +='<h1> '+myTitle+'</h1><img src="https://secure.syndetics.com/index.aspx?isbn='+myISBN+'/lc.gif&client=civspytest"/></br></br>';
+                    document.getElementById("bib_results").innerHTML +='<input type="button" id="add_hold_button" value="Add hold" class="inputButton" onclick="addHold('+ '\'' +manifestationIdentifier.trim()+ '\'' +');"><br></br>';
+                   // document.getElementById("bib_results").innerHTML +='<input type="button" id="cancel_hold_button" value="Cancel hold" class="inputButton" onclick="removeHold();"><br></br>';
                    
 
-
-
-
-                    console.log(data);
-                  
-                  document.getElementById("bib_results").innerHTML ='<h1> '+myTitle+'</h1><img src="https://secure.syndetics.com/index.aspx?isbn='+myISBN+'/lc.gif&client=civspytest"/>'
 
                    ;
 
@@ -1555,27 +1587,38 @@ function addHoldConfirmation() {
         chargeAcknowledged.disabled = true;
 }
 
-function addHold() {
+function addHold(theBRN) {
     try {
         var url = api_url + "lcf/1.0/reservation";
         var authorization = 'Bearer ' + AccessToken;
-       // var serialization = $('input[name="addHoldSerType"]:checked').val();
-        var identifier = $('#addHoldIdentifier').val().trim();
-        var patronIdentifier = $('#addHoldPatronIdentifier').val().trim();
-        var pickupLocation = $('#addHoldPickupLocation').val().trim();
-        var validatePatronToken = $('input[name="addHoldValidatePatronToken"]:checked').val();
+       // var serialization = $('input[name="addHoldSerType"]:checked').val();       
+        //var identifier = $('#addHoldIdentifier').val().trim();
+
+        //var identifier = $('#bibliographicInfoItemIdentifier').val().trim();
+        var identifier = theBRN.trim();
+        var patronIdentifier = $('#authPatronUsername').val().trim();
+ 
+        var pickupLocation = $('#authVendorLibarayId').val();
+
+        var validatePatronToken = 'false';
+
+        //var validatePatronToken = $('input[name="addHoldValidatePatronToken"]:checked').val();
+
         if (validatePatronToken != 'true')
             validatePatronToken = false;
 
-        var confirmation = $('input[name="addHoldConfirmation"]:checked').val();
+        var confirmation =false;
+        //var confirmation = $('input[name="addHoldConfirmation"]:checked').val();
         if (confirmation != 'true')
             confirmation = false;
-        var chargeAcknowledged = $('input[name="addHoldChargeAcknowledged"]:checked').val();
+        
+        var chargeAcknowledged = false;
+        //var chargeAcknowledged = $('input[name="addHoldChargeAcknowledged"]:checked').val();
         if (chargeAcknowledged != 'true')
             chargeAcknowledged = false;
-
-        var identifierType = $('input[name="addHoldIdentifierType"]:checked').val();
-
+        var identifierType = "brn";
+       // var identifierType = $('input[name="addHoldIdentifierType"]:checked').val();
+console.log("Loan attempt 0");
         if (confirmation)
             url += "?confirmation=Y";
         else if (chargeAcknowledged)
@@ -1587,10 +1630,10 @@ function addHold() {
 
         if (identifier == "")
             throw new Error("Identifier missing.");
-
+console.log("identifier="+identifier);
         if (patronIdentifier == "")
             throw new Error("Patron identifier missing.");
-
+console.log("patronIr="+patronIdentifier);
         if (pickupLocation == "")
             throw new Error("Pickup location missing.")
 
@@ -1599,11 +1642,16 @@ function addHold() {
             reservationType = "03";
         }
         else {
+            //its BRN
             manifestationReference = identifier;
             reservationType = "02";
+            itemIdentifier = identifier;
         }
 
         var request = "";
+console.log("itemIdentifier="+itemIdentifier);
+console.log("reservationType="+reservationType);
+console.log("manifestationReference="+manifestationReference);
 
         if (serialization == 'xml') {
             request = "<reservation version=\"1.0\" xmlns=\"http://ns.bic.org.uk/lcf/1.0\">" +
@@ -1624,8 +1672,9 @@ function addHold() {
                 "pickup-location-ref": pickupLocation,
             }
             request = JSON.stringify(json);
+           
         }
-
+console.log("Loan attempt 3");
         $('#addHoldHttpStatus').val('');
         $('#addHoldOutput').text('');
         $.ajax({
@@ -1644,6 +1693,9 @@ function addHold() {
                 var response;
                 if (serialization == 'json') {
                     response = JSON.stringify(data);
+                     console.log("Loan attempt addHold()=" + request);
+                     document.getElementById("add_hold_button").value = "Hold Placed";
+
                 }
                 else {
                     var xmlString;
@@ -1767,12 +1819,19 @@ function removeHold() {
         var url = api_url + "lcf/1.0/reservation/";
         var authorization = 'Bearer ' + AccessToken;
        // var serialization = $('input[name="removeHoldSerType"]:checked').val();
-        var reservationIdentifier = $('#removeHoldIdentifier').val().trim();
-        var validatePatronToken = $('input[name="removeHoldValidatePatronToken"]:checked').val();
+        var reservationIdentifier = $('#bibliographicInfoItemIdentifier').val().trim();
+
+        var validatePatronToken = 'false';
+
+       // var reservationIdentifier = $('#removeHoldIdentifier').val().trim();
+        //var validatePatronToken = $('input[name="removeHoldValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
 
-        var confirmation = $('input[name="removeHoldConfirmation"]:checked').val();
+        var confirmation = 'true';    
+
+       // var confirmation = $('input[name="removeHoldConfirmation"]:checked').val();
+        
         if (confirmation != 'true')
             confirmation = false;
 
@@ -3545,6 +3604,21 @@ function opacLogin() {
     }
 }
 
+function bookGenerator() {
+     document.getElementById("bib_results").innerHTML ='Loading Item Details';
+
+    var bookString = $('#bibliographicInfoItemIdentifier').val().trim();
+     console.log("bookString=" +bookString) ;
+   // var bookArray = JSON.parse("[" + bookString + "]");
+    var bookArray  = bookString.split(",")
+    for (var myBook in bookArray ){
+        console.log("Doing bookGenerator=" +bookArray[myBook]) ;
+        bibliographicInfo(bookArray[myBook].trim() );
+
+    }
+}
+
+//bibliographicInfo()
 
 
 
