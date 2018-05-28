@@ -1,7 +1,7 @@
 
 var AccessToken = "DSuQvibcoWdiMZVYWASC/E4k5z6pbsPSgN+Gg/Ql416V+cWRiZ4ekeoK4R4RuTrmwDu9+S2wxA/wIr1FmyQSBDPpq6kV7g/KUL5YCWNlXlOaujVIEJ47AhYw8NWjRMDZHde4cJrx/JsURNSfkU3GRKZ6ezOzuPEQcJRs6Opy7wGKHvpp/eLdVO+InCb7R62GNaQauUzr7FwbUP5n8944ZByyKtvMcoB5NxoXGZmya+j3N2aV4A/nqKizS52KKYIlQpRI58RZP0vB7fZjgZrXvrbHVVijkw3mq9yA9bM3quCPwDP5zLIFKWvNst/cT//yqcObTWulPCtP4jDO4FLaR6cTkUPR5qIJ";
 var PatronToken = "";
-var api_url= "http://webapi-spydus.civica.com.au/";
+var api_url= "ipswichtest.spydus.com/api";
 var serialization = "json";
 
 function initialize() {
@@ -214,6 +214,7 @@ function authenticateVendor() {
         var key = $('#authVendorKey').val().trim().trim();
         var url = api_url + "lcf/1.0/Authenticate/vendor";
         var authorization = 'Basic ' + $.base64.btoa(key + ':' + username + ':' + password + ':' + institutionId + ':' + libraryId);
+		console.log("authorization ="+authorization);
         var request = "";
 
         if (key == "")
