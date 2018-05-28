@@ -1139,7 +1139,7 @@ function itemCount() {
 function bibliographicInfo(myBrn){
     try {
 
-        var url = api_url + "lcf/1.0/manifestation/";
+        var url = api_url + "lcf/1.0/manifestations/";
         var authorization = 'Bearer ' + AccessToken;
        // var serialization = $('input[name="bibliographicInfoSerType"]:checked').val();
        // var manifestationIdentifier = $('#bibliographicInfoItemIdentifier').val().trim();
