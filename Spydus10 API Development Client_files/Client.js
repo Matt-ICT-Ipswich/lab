@@ -443,7 +443,7 @@ function validateBearerToken() {
 
 function patronInfo() {
     try {
-        var url = api_url + "lcf/1.0/patron/";
+        var url = api_url + "lcf/1.0/patrons/";
         var authorization = 'Bearer ' + AccessToken;
 
        // var serialization = $('input[name="patronInfoSerType"]:checked').val();
