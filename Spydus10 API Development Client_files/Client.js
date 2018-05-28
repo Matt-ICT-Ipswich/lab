@@ -1193,7 +1193,8 @@ function bibliographicInfo(myBrn){
                     if ( document.getElementById("bib_results").innerHTML =='Loading Item Details')
                          document.getElementById("bib_results").innerHTML ='';
                   
-                    document.getElementById("bib_results").innerHTML +='<h1> '+myTitle+'</h1><img src="https://secure.syndetics.com/index.aspx?isbn='+myISBN+'/lc.gif&client=civspytest"/></br></br>';
+                    document.getElementById("bib_results").innerHTML +='<h1> '+myTitle+'</h1><img src="https://secure.syndetics.com/index.aspx?isbn='+myISBN+'/lc.gif&client=ipswp"/></br></br>';
+			
                     document.getElementById("bib_results").innerHTML +='<input type="button" id="add_hold_button" value="Add hold" class="inputButton" onclick="addHold('+ '\'' +manifestationIdentifier.trim()+ '\'' +');"><br></br>';
                    // document.getElementById("bib_results").innerHTML +='<input type="button" id="cancel_hold_button" value="Cancel hold" class="inputButton" onclick="removeHold();"><br></br>';
                    
