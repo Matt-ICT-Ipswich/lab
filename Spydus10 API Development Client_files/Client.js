@@ -2181,7 +2181,7 @@ function patronSearch() {
 
         throw new Error("Currently not implemented.");
 
-        var url = api_url + "lcf/1.0/patron";
+        var url = api_url + "lcf/1.0/patrons";
         var authorization = 'Bearer ' + AccessToken;
        // var serialization = $('input[name="patronSearchSerType"]:checked').val();
         var validatePatronToken = $('input[name="patronSearchValidatePatronToken"]:checked').val();
@@ -2770,7 +2770,7 @@ function bibliographicSearch() {
 
 function createPatron() {
     try {
-        var url = api_url + "lcf/1.0/patron";
+        var url = api_url + "lcf/1.0/patrons";
         var authorization = 'Bearer ' + AccessToken;
        // var serialization = $('input[name="createPatronSerType"]:checked').val();
         var patronIdentifier = $('#createPatronPatronIdentifier').val().trim();
