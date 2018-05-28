@@ -1,11 +1,11 @@
-//TESTING GITHUB EDIT ---
-//TESTING GITHUB EDIT ---
+//NEW EDIT from HISTORY
+
 var AccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNUEFTQ09FIiwianRpIjoiZDg4ZGI4ZTUtYTNiZC00NmZhLWE4MTEtOGVlODliMWQxYjBhIiwiaWF0IjoxNTI3NDY4NzQ0LCJ1bmlxdWVfbmFtZSI6Ik1QQVNDT0UiLCJJbnN0aXR1dGlvbklkIjoiUUlQUyIsIkJyYW5jaElSTiI6IjI1MzI1IiwiTGluZUlSTiI6IiIsIlVzZXJJUk4iOiIyNjAxNCIsIk5hbWVJUk4iOiIxNTA2MzI4IiwiU2Vzc2lvbklkIjoiNEE2RTkwRTkyNDY2OTgzRjc1MUMyODY1QjExRjc1Rjk2MTM4MTE2QjlCOUFCOEQyQjI4NkI2MTIwRjg4QzA2QkVGODQwRjQyQzA1RTZGQ0U1MzhDQ0I3QkUyQUNFM0JBIiwiT1BBQyI6IjAiLCJQcml2aWxlZ2VzIjoiQVF8NF1BUnw0XUNDfDRdQ1R8NF1EQXw0XUVWfDRdUk18NF1SUHw0XVJRfDRdU0N8NF1TWXw0IiwiTW9kdWxlIjpbIkxDRiIsIkNJUkNVTEFUSU9OIiwiRVZFTlRTIiwiUkVQT1JUUyIsIlBVQkxJQyJdLCJuYmYiOjE1Mjc0Njg3NDMsImV4cCI6MTUyNzQ3MjM0MywiaXNzIjoiU3B5ZHVzQVBJVG9rZW5TZXJ2ZXIiLCJhdWQiOiJodHRwOi8vc3B5ZHVzLmNvbS8ifQ.rbIfdb3sCVzFGfTM3ZTs9Io6xURco31dHdMUT6VZHUk";
 var PatronToken = "";
 var api_url= 	"https://ipswichtest.spydus.com/api/";
 			//	 https://ipswichtest.spydus.com/api/lcf/1.0/authorization
-
 var serialization = "json";
+
 
 function initialize() {
     menuMainItemClick('authentication')
@@ -216,9 +216,7 @@ function authenticateVendor() {
         var expires = $('#authVendorExpires').val().trim();
         var key = $('#authVendorKey').val().trim().trim();
         var url = api_url + "lcf/1.0/Authenticate/vendor";
-		
         var authorization = 'Basic ' + $.base64.btoa(key + ':' + username + ':' + password + ':' + institutionId + ':' + libraryId);
-		console.log("authorization = " + authorization);
         var request = "";
 
         if (key == "")
@@ -1158,7 +1156,6 @@ function bibliographicInfo(myBrn){
 
         $('#bibliographicInfoHttpStatus').val('');
         $('#bibliographicInfoOutput').text('');
-	console.log("URL = " +url); 
         $.ajax({
             type: "GET",
             url: url,
@@ -3617,14 +3614,17 @@ function bookGenerator() {
      console.log("bookString=" +bookString) ;
    // var bookArray = JSON.parse("[" + bookString + "]");
     var bookArray  = bookString.split(",")
-    for (var myBook in bookArray ){ 
-        console.log("Doing bookGenerator = " +bookArray[myBook]) ;
+    for (var myBook in bookArray ){
+        console.log("Doing bookGenerator=" +bookArray[myBook]) ;
         bibliographicInfo(bookArray[myBook].trim() );
 
     }
 }
 
 //bibliographicInfo()
+
+
+
 
 
 
