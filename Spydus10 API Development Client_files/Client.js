@@ -218,7 +218,7 @@ function authenticateVendor() {
         var url = api_url + "lcf/1.0/Authenticate/vendor";
 		
         var authorization = 'Basic ' + $.base64.btoa(key + ':' + username + ':' + password + ':' + institutionId + ':' + libraryId);
-		console.log("authorization ="+authorization);
+		console.log("authorization = " + authorization);
         var request = "";
 
         if (key == "")
@@ -1158,6 +1158,7 @@ function bibliographicInfo(myBrn){
 
         $('#bibliographicInfoHttpStatus').val('');
         $('#bibliographicInfoOutput').text('');
+	console.log("URL = " +url); 
         $.ajax({
             type: "GET",
             url: url,
@@ -3616,8 +3617,8 @@ function bookGenerator() {
      console.log("bookString=" +bookString) ;
    // var bookArray = JSON.parse("[" + bookString + "]");
     var bookArray  = bookString.split(",")
-    for (var myBook in bookArray ){
-        console.log("Doing bookGenerator=" +bookArray[myBook]) ;
+    for (var myBook in bookArray ){ 
+        console.log("Doing bookGenerator = " +bookArray[myBook]) ;
         bibliographicInfo(bookArray[myBook].trim() );
 
     }
