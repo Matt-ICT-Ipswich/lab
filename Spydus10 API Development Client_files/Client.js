@@ -206,7 +206,7 @@ function authenticateVendor() {
     try {
 	//THIS HAS ALL CHANGED
        
-        console.log("attempting vendor authentication");
+        console.log("attempting vendor authentication 2");
 
        // var serialization =  $('#authVendorSerType').val();
         var username = $('#authVendorUsername').val().trim();
