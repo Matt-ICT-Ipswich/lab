@@ -253,7 +253,8 @@ function authenticateVendor() {
                         //document.getElementById("authentication_results").innerHTML += prop += "=" + data[prop] + "</br>"; 
                         //Set Authentication
                         AccessToken = data["Access_Token"]; 
-                        document.getElementById("TokenText").innerHTML = "AccessToken = " + AccessToken +"</br>"; 
+                       // document.getElementById("TokenText").innerHTML = "AccessToken = " + AccessToken +"</br>"; 
+					   var validatePatronToken = $('#TokenText').val();
 						console.log("AccessToken = " + AccessToken);
                          return( AccessToken );            
                     //}
@@ -1496,11 +1497,13 @@ function renewal() {
         var url = api_url + "lcf/1.0/loans";
         var authorization = 'Bearer ' + AccessToken;
        // var serialization = $('input[name="renewalSerType"]:checked').val();
-        var itemIdentifier = $('#renewalItemIdentifier').val().trim();
-        var patronIdentifier = $('#renewalPatronIdentifier').val().trim();
+        var itemIdentifier = $('#ITEM_ID').val().trim();
+/*       
+	   var patronIdentifier = $('#renewalPatronIdentifier').val().trim();
         var validatePatronToken = $('input[name="renewalValidatePatronToken"]:checked').val();
         if (validatePatronToken != 'true')
             validatePatronToken = false;
+			*/
         var confirmation = $('input[name="renewalConfirmation"]:checked').val();
         if (confirmation != 'true')
             confirmation = false;
@@ -1515,8 +1518,8 @@ function renewal() {
 
         if (itemIdentifier == "")
             throw new Error("Item identifier missing.");
-        if (patronIdentifier == "")
-            throw new Error("Patron identifier missing.");
+        //if (patronIdentifier == "")
+            //throw new Error("Patron identifier missing.");
 
         var request = "";
 
