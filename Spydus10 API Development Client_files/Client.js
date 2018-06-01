@@ -255,7 +255,7 @@ function authenticateVendor() {
                         AccessToken = data["Access_Token"]; 
                         document.getElementById("TokenText").innerHTML = "AccessToken = " + AccessToken +"</br>"; 
 						console.log("AccessToken = " + AccessToken);
-                                      
+                         return( AccessToken );            
                     //}
 
                     //document.getElementById("results").innerHTML = response; 
