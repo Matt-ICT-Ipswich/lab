@@ -217,6 +217,7 @@ function authenticateVendor() {
         var key = $('#authVendorKey').val().trim().trim();
         var url = api_url + "lcf/1.0/authorization";
         var authorization = 'Basic ' + $.base64.btoa(key + ':' + username + ':' + password + ':' + institutionId + ':' + libraryId);
+		console.log ("authorization ="+authorization );
         var request = "";
 
         if (key == "")
